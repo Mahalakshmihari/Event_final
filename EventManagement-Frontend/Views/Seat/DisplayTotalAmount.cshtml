@@ -1,0 +1,37 @@
+﻿@model PaymentResultViewModel
+
+@{
+    ViewBag.Title = "Total Amount";
+}
+<head>
+    <link href="~/css/carousel.css" rel="stylesheet" />
+</head>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #4b0082;">
+        <a class="navbar-brand" href="#">EventManagementApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Booking" asp-action="Index">Booking History</a>
+                </li>
+            </ul>
+            <form class="form-inline mt-2 mt-md-0" asp-controller="Authenticate" asp-action="Registration" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" margin-left: 1100px;">Logout</button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Your Total Amount</h2>
+    <div>
+        <h3>Total Amount: @Model.TotalAmount</h3>
+    </div>
+
+    <div>
+        <a href="@Url.Action("PaymentResult", "UserPayment", new { amount = Model.TotalAmount })" class="btn btn-primary">Proceed</a>
+    </div>
+</div>

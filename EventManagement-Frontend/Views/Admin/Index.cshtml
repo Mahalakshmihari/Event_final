@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use the existing layout
+}
+ <html>
+<head>
+    <style>
+        .header {
+            padding: 10px;
+            text-align: center;
+            background: #4b0082;
+            color: white;
+            width: 100%;
+            font-size: 24px;
+        }
+
+        .footer {
+            padding: 5px;
+            text-align: center;
+            background: #4b0082;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>    
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #4b0082;">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EventManagementApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                   @*   </li>
+                     <li class="nav-item" style=" margin-left: 1100px;">
+                     <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="EventAppPage">Logout</a>
+                     </li> *@
+                    <li>
+                        <form class="form-inline mt-2 mt-md-0" asp-controller="Home" asp-action="EventAppPage" method="get">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" margin-left: 1100px;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mt-4">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome to the admin panel. Use the menu to manage the system.</p>
+
+    <!-- Admin Dashboard Content -->
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Category Management</h4>
+            <a href="@Url.Action("Index", "Category")" class="btn btn-primary">Manage Category</a>
+        </div>
+        @* <div class="col-md-6">
+            <h4>User Management</h4>
+            <a href="@Url.Action("Index", "")" class="btn btn-primary">Manage Users</a>
+        </div> *@
+        <div class="col-md-6">
+            <h4>Event Management</h4>
+            <a href="@Url.Action("AdminIndex", "Event")" class="btn btn-primary">Manage Events</a>
+        </div>
+    </div>
+    <div class="row mt-4">
+       @*  <div class="col-md-6">
+            <h4>Payment Management</h4>
+            <a href="@Url.Action("Index", "PaymentManagement")" class="btn btn-primary">Manage Payments</a>
+        </div> *@
+        <div class="col-md-6">
+            <h4>Review Management</h4>
+            <a href="@Url.Action("Index", "Review")" class="btn btn-primary">Manage Reviews</a>
+        </div>
+            <div class="col-md-6">
+                <h4>User Management</h4>
+                <a href="@Url.Action("Index", "Profile")" class="btn btn-primary">Manage Users</a>
+            </div>
+    </div>
+</div>
+</body>
+</html>

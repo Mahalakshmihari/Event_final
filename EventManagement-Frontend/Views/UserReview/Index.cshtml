@@ -1,0 +1,35 @@
+﻿@model List<UserReviewModel>
+
+<h2 class="header text-center">Discover Our Events</h2>
+<h5 class="header text-center ">Reviews of Our Events</h5>
+@if (Model == null || !Model.Any())
+{
+    <p>No events available at the moment.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Date</th>
+                <th>Add</th>
+                @* <th>Delete</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.Rating⭐⭐⭐⭐⭐</td>
+                    <td>@review.Comment</td>
+                    <td>@review.ReviewDate.ToString("yyyy-MM-dd")</td>
+                    <td><a href="@Url.Action("Create","UserReview")">Add Review</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+<a href="@Url.Action("Index","Event")">Back To Events</a>

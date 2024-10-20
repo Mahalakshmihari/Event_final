@@ -1,0 +1,43 @@
+﻿
+@model List<EventManagement_Frontend.Models.BookingModel>
+
+@{
+    ViewData["Title"] = "Bookings";
+    // ViewBag
+
+}
+
+<h2>Bookings</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Booking Date</th>
+            <th>Is Booked</th>
+            @* <th>Details</th> *@
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach (var booking in Model)
+        {
+            @if (ViewBag.userId==booking.UserId)
+            {
+                <tr>
+                    <td>@booking.BookingId</td>
+                <td>@booking.BookingDate.ToShortDateString()</td>
+                <td>@(booking.IsBooked ? "Booked" : "Not Booked")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@booking.BookingId" class="btn btn-info">View Details</a>
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Home" asp-action="HomePage" class="btn btn-info">BACK TO HOME</a>
+
+
+

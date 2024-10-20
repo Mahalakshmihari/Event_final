@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model EventManagement_Frontend.Models.BookingModel
+
+@{
+    ViewData["Title"] = "Booking Details";
+}
+
+<h2>Booking Details</h2>
+
+<div>
+    <h4>Booking Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Booking ID</dt>
+        <dd class="col-sm-10">@Model.BookingId</dd>
+
+        <dt class="col-sm-2">Booking Date</dt>
+        <dd class="col-sm-10">@Model.BookingDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Is Booked</dt>
+        <dd class="col-sm-10">@(@Model.IsBooked ? "Booked" : "Not Booked")</dd>
+    </dl>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Back to Bookings</a>
+

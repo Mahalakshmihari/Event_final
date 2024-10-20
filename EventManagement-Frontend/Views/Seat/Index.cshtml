@@ -1,0 +1,180 @@
+﻿@model List<EventManagement_Frontend.Models.SeatModel>
+@{
+    ViewData["Title"] = "Book Your Seat";
+}
+<head>
+    <link href="~/css/carousel.css" rel="stylesheet" />
+</head>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #4b0082;">
+
+        <a class="navbar-brand" href="#">EventManagementApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" >
+                    <a class="nav-link" asp-controller="Booking" asp-action="Index" >Booking History</a>
+                </li>
+            </ul>
+            <form class="form-inline mt-2 mt-md-0" asp-controller="Authenticate" asp-action="Registration" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" margin-left: 1100px;">Logout</button>
+            </form>
+        </div>
+    </nav>
+    </header>
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Input to select number of seats -->
+<label for="seatCount">Enter number of seats to book:</label>
+<input type="number" id="seatCount" min="1" max="@Model.Count" />
+<button id="confirmSeatCount">Confirm Seats</button>
+<div id="seating-chart">
+    @foreach (var seat in Model)
+    {
+        if (seat != null)
+        {
+            <div class="seat @(seat.IsAvailble.GetValueOrDefault() ? "booked" : "available")"
+                 data-seat-id="@seat.SeatId"
+                 data-seat-number="@seat.SeatNumber">
+                @seat.SeatNumber
+            </div>
+        }
+    }
+</div>
+
+<!-- Book button -->
+<button id="bookSeatsButton" style="display:none;">BOOK TICKET</button>
+<br />
+<button id="continueButton" style="display:none;" >Continue Payment</button>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var selectedSeats = [];
+            var maxSeats = 0;
+            var seatIds;
+            var totalAmount;
+            // Disable seat selection initially
+            $('.available').css('pointer-events', 'none');
+
+            // Confirm seat count button click
+            $('#confirmSeatCount').click(function () {
+                maxSeats = parseInt($('#seatCount').val());
+
+                if (isNaN(maxSeats) || maxSeats <= 0) {
+                    alert('Please enter a valid number of seats.');
+                    return;
+                }
+
+                alert('You can select up to ' + maxSeats + ' seats.');
+
+                // Enable seat selection after confirming seat count
+                $('.available').css('pointer-events', 'auto');
+            });
+            // Disable the button to prevent double clicks
+            $(this).prop('disabled', true);
+            // Click event on available seats
+            $('.seat').on('click', function () {
+                var seatId = $(this).data('seat-id');
+
+                if ($(this).hasClass('available') && selectedSeats.length < maxSeats) {
+                    if (selectedSeats.includes(seatId)) {
+                        // Deselect seat, change back to green
+                        selectedSeats = selectedSeats.filter(id => id !== seatId);
+                        $(this).removeClass('selected').addClass('available');
+                    } else {
+                        // Select seat, change to yellow
+                        selectedSeats.push(seatId);
+                        $(this).removeClass('available').addClass('selected');
+                    }
+                } else if ($(this).hasClass('selected')) {
+                    // If seat is already selected, unselect it
+                    selectedSeats = selectedSeats.filter(id => id !== seatId);
+                    $(this).removeClass('selected').addClass('available');
+                } else if (selectedSeats.length >= maxSeats) {
+                    alert('You can only select up to ' + maxSeats + ' seats.');
+                }
+
+                // Toggle "BOOK TICKET" button visibility
+                if (selectedSeats.length > 0) {
+                    $('#bookSeatsButton').show();
+                } else {
+                    $('#bookSeatsButton').hide();
+                }
+            });
+
+            // Book Seats button click
+            $('#bookSeatsButton').click(function () {
+                var userId = 1; // Replace with the logged-in user's ID
+
+                // Post the selected seats to the server for booking
+                $.post('@Url.Action("BookSeats", "Seat")', { userId: userId, seatIds: selectedSeats }, function (data) {
+                    if (data.success) {
+                        // Mark selected seats as booked, change to red
+                        selectedSeats.forEach(function (id) {
+                            $('.seat[data-seat-id="' + id + '"]').removeClass('selected available').addClass('booked');
+                        });
+
+                        alert(data.message);
+                        totalAmount = (selectedSeats.count * 100).toFixed(2);
+                        // alert('TotalAmount ' + totalAmount);
+                        // seatIds=selectedSeats.join(",");
+
+                        selectedSeats = [];
+
+                        $('#bookSeatsButton').hide();
+
+
+                        // Show the "Continue" button
+                        $('#continueButton').show();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+            });
+            $('#continueButton').click(function () {
+                var noOfSeat = $('#seatCount').val();
+
+                window.location.href = '@Url.Action("CalculateAmount", "Seat")' + '?seats=' + maxSeats;
+            });
+
+        });
+
+
+    </script>
+}
+
+<style>
+    #seating-chart {
+        display: flex;
+        flex-wrap: wrap;
+        width: 300px;
+    }
+
+    .seat {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 1px solid black;
+    }
+
+    .available {
+        background-color: green;
+    }
+
+    .selected {
+        background-color: yellow;
+    }
+
+    .booked {
+        background-color: red;
+        cursor: not-allowed;
+    }
+</style>

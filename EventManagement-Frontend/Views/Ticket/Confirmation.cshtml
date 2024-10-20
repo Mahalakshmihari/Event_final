@@ -1,0 +1,41 @@
+﻿@model EventManagement_Frontend.Models.TicketModel
+
+@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<h1>Confirmation</h1>
+
+<div>
+    <h4>TicketModel</h4>
+    <hr />
+    <dl class="row">
+      @*   <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BookingID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BookingID)
+        </dd> *@
+        @* <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SeatNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SeatNumber)
+        </dd> *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfTickets)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfTickets)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
+        <a asp-controller="UserPayment" asp-action="Index" class="btn btn-primary" asp-route-id="@Model.TotalAmount" >Proceed payment</a>
+    </dl>
+</div>
+<div>
+</div>

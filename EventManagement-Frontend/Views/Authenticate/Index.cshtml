@@ -1,0 +1,62 @@
+﻿
+<H1>You are logged in</H1>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 id="animated-text" class="text-center"></h1>
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/concert.jpg" class="d-block w-100 h-60" alt="...">
+            <h5>First slide label</h5>
+            <p>Some representative placeholder content for the first slide.</p>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/music.jpg" class="d-block w-100 h-60" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/football.jpg" class="d-block w-100 h-60" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/cricket.jpg" class="d-block w-100 h-60" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/stadium.jpg" class="d-block w-100 h-60" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/conference.jpg" class="d-block w-100 h-60" alt="...">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const text = "Welcome to Event Management System...";
+        const elem = document.getElementById("animated-text");
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                elem.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100); // Adjust the speed here
+            } else {
+                // Wait a bit before starting the animation again
+                setTimeout(() => {
+                    elem.innerHTML = ''; // Clear the text
+                    index = 0; // Reset index
+                    typeWriter(); // Start again
+                }, 1500); // Wait for 2 seconds before restarting (adjust as needed)
+            }
+        }
+
+        typeWriter();
+    });
+
+
+</script>

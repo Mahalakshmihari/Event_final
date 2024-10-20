@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<EventManagement_Frontend.Models.ReviewModel>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+<html>
+<head>
+    <style>
+        .header {
+            padding: 10px;
+            text-align: center;
+            background: #4b0082;
+            color: white;
+            font-size: 24px;
+        }
+
+        .footer {
+            padding: 5px;
+            text-align: center;
+            background: #4b0082;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #4b0082;">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EventManagementApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="Index">Home</a>
+                        @*   </li>
+                        <li class="nav-item" style=" margin-left: 1100px;">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="EventAppPage">Logout</a>
+                        </li> *@
+                    <li>
+                        <form class="form-inline mt-2 mt-md-0" asp-controller="Home" asp-action="EventAppPage" method="get">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" margin-left: 1100px;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    <br />
+    <br />
+    <h2>All Reviews</h2>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Review ID</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Review Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.ReviewId</td>
+                    <td>@review.Rating</td>
+                    <td>@review.Comment</td>
+                    <td>@review.ReviewDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No reviews available.</p>
+}
+</body>
+</html>

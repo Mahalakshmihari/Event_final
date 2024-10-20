@@ -1,0 +1,32 @@
+﻿body {
+    /*    padding-top: 56px;
+    background-color: #343a40;
+    background-image: url('@Url.Content("~/images/music.jpg")');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;*/
+}
+
+.payment-form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+    .payment-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .payment-form button {
+        background-color: #8BC34A;
+        color: white;
+    }
+
+.card-icons img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+    
